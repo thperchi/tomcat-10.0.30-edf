@@ -2169,7 +2169,7 @@ Apache Tomcat ${version} native binaries for Win64 AMD64/EMT64 platform.
       encoding="UTF-8"
       docencoding="UTF-8"
       charset="UTF-8"
-      additionalparam="-breakiterator -notimestamp -html5"
+      additionalparam="-breakiterator -notimestamp"
       source="${compile.release}"
       maxmemory="512m"
       failonerror="true"
@@ -2191,7 +2191,7 @@ Apache Tomcat ${version} native binaries for Win64 AMD64/EMT64 platform.
       encoding="UTF-8"
       docencoding="UTF-8"
       charset="UTF-8"
-      additionalparam="-breakiterator -notimestamp -html5"
+      additionalparam="-breakiterator -notimestamp"
       source="${compile.release}"
       maxmemory="512m"
       failonerror="true"
@@ -2212,7 +2212,7 @@ Apache Tomcat ${version} native binaries for Win64 AMD64/EMT64 platform.
       encoding="UTF-8"
       docencoding="UTF-8"
       charset="UTF-8"
-      additionalparam="-breakiterator -notimestamp -html5"
+      additionalparam="-breakiterator -notimestamp"
       source="${compile.release}"
       maxmemory="512m"
       failonerror="true"
@@ -2233,7 +2233,7 @@ Apache Tomcat ${version} native binaries for Win64 AMD64/EMT64 platform.
       encoding="UTF-8"
       docencoding="UTF-8"
       charset="UTF-8"
-      additionalparam="-breakiterator -notimestamp -html5"
+      additionalparam="-breakiterator -notimestamp"
       source="${compile.release}"
       maxmemory="512m"
       failonerror="true"
@@ -2254,7 +2254,7 @@ Apache Tomcat ${version} native binaries for Win64 AMD64/EMT64 platform.
       encoding="UTF-8"
       docencoding="UTF-8"
       charset="UTF-8"
-      additionalparam="-breakiterator -notimestamp -html5"
+      additionalparam="-breakiterator -notimestamp"
       source="${compile.release}"
       maxmemory="512m"
       failonerror="true"
@@ -2275,7 +2275,7 @@ Apache Tomcat ${version} native binaries for Win64 AMD64/EMT64 platform.
       encoding="UTF-8"
       docencoding="UTF-8"
       charset="UTF-8"
-      additionalparam="-breakiterator -notimestamp -html5"
+      additionalparam="-breakiterator -notimestamp"
       maxmemory="512m"
       failonerror="true"
       failonwarning="true">
@@ -2294,7 +2294,7 @@ Apache Tomcat ${version} native binaries for Win64 AMD64/EMT64 platform.
       encoding="UTF-8"
       docencoding="UTF-8"
       charset="UTF-8"
-      additionalparam="-breakiterator -notimestamp -html5"
+      additionalparam="-breakiterator -notimestamp"
       source="${compile.release}"
       maxmemory="512m"
       failonerror="true"
@@ -2576,21 +2576,6 @@ skip.installer property in build.properties" />
   <target name="installer-sign"
       description="Builds and optionally signs the Windows installer"
       depends="-installer,setup-jsign" if="${do.codesigning}" >
-    <jsign file="${tomcat.release}/v${version}/bin/${final.name}.exe"
-        storepass="${codesigning.storepass}"
-        storetype="${codesigning.storetype}"
-        alias="${codesigning.alias}"
-        alg="${codesigning.digest}"
-        tsaurl="http://timestamp.digicert.com"
-        detached="true" />
-    <!-- Copy detached signature to source tree -->
-    <copy file="${tomcat.release}/v${version}/bin/${final.name}.exe.sig"
-        tofile="res/install-win/tomcat-installer.exe.sig"/>
-    <delete file="${tomcat.release}/v${version}/bin/${final.name}.exe.sig" />
-    <!-- .exe has changed so need to redo checksums and OpenPGP signature -->
-    <delete file="${tomcat.release}/v${version}/bin/${final.name}.exe.asc" />
-    <delete file="${tomcat.release}/v${version}/bin/${final.name}.exe.sha512" />
-    <hashAndSign file="${tomcat.release}/v${version}/bin/${final.name}.exe" />
   </target>
 
   <target name="-pre-release-lone-target-check">
@@ -2638,7 +2623,7 @@ version.dev=
 ant.tstamp.now.iso=${tstamp.iso.release}
 
 # Enable insertion of detached signatures into the Windows installer.
-do.codesigning=true
+do.codesigning=false
 
 # Re-use the same GPG executable.
 gpg.exec=${gpg.exec}

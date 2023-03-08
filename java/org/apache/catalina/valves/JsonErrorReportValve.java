@@ -22,13 +22,18 @@ import java.io.Writer;
 import org.apache.catalina.connector.Request;
 import org.apache.catalina.connector.Response;
 import org.apache.tomcat.util.ExceptionUtils;
+import org.apache.tomcat.util.json.JSONFilter;
 import org.apache.tomcat.util.res.StringManager;
 
 /**
- * <p>Implementation of a Valve that outputs error jsons.</p>
+ * <p>
+ * Implementation of a Valve that outputs error jsons.
+ * </p>
  *
- * <p>This Valve should be attached at the Host level, although it will work
- * if attached to a Context.</p>
+ * <p>
+ * This Valve should be attached at the Host level, although it will work
+ * if attached to a Context.
+ * </p>
  *
  */
 public class JsonErrorReportValve extends ErrorReportValve {
@@ -62,10 +67,10 @@ public class JsonErrorReportValve extends ErrorReportValve {
             }
         }
         String jsonReport = "{\n" +
-                            "  \"type\": \"" + type + "\",\n" +
-                            "  \"message\": \"" + message + "\",\n" +
-                            "  \"description\": \"" + description + "\"\n" +
-                            "}";
+                "  \"type\": \"" + JSONFilter.escape(type) + "\",\n" +
+                "  \"message\": \"" + JSONFilter.escape(message) + "\",\n" +
+                "  \"description\": \"" + JSONFilter.escape(description) + "\"\n" +
+                "}";
         try {
             try {
                 response.setContentType("application/json");
